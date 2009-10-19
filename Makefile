@@ -6,4 +6,7 @@ all: record
 record: record.o file.o
 
 clean: 
-	rm -f *~ *.o record *.stamps core *.mp3
+	rm -f *~ *.o record core
+
+delete_my_data:
+	rm -f *.mp3 *.stamps

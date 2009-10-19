@@ -1,0 +1,47 @@
+record (arbeidstittel) er skrevet av Kristoffer E. Koch, og kan brukes
+under AGPL versjon 3 lisens.
+
+Noe så trivielt som å gjøre opptak av lyd byr på problemer over tid.
+
+Vanligvis når man skal gjøre opptak, gjør man antagelsen om at ett
+sekund med opptak inneholder f.eks. 48000 "frames". For de fleste
+praktiske formål går dette fint, men dersom (og det er den ofte)
+klokken på lydkortet ikke produserer 48000 impulser per sekund, ender
+man opp med en for kort eller for lang lydfil dersom man f.eks. tar
+opp en dag. Dette høres ikke, men er problematisk hvis man skal gjøre
+automatisk klipping av lyd.
+
+Ved å bruke NTP kan klokken i linux holdes disiplinert oppimot
+mikrosekund eller der om kring. NTP er en fantastisk og magisk
+protokoll som gjør at man alltid har svært nøyaktig tid. NTP justerer
+heller ikke klokken i "hopp", men justerer heller hastigheten på
+klokken for å "ta igjen" eller "vente på" tiden.
+
+Dette programmet tar opp lyd vha. jack til en stor mp3-fil på
+"gamlemåten". Det dette programmet også gjør, er å lagre en binærfil
+med samplenummer lagret på et fast tidsintervall (nå hardkodet til en
+gang pr sekund). Denne filen kan brukes for å klippe ut ønskede data
+av mp3-filen med f.eks mp3splt.
+
+Bugs:
+Sommertid/vintertid vil sikkert krasje record
+Store avvik i samplerate vil sikkert krasje record
+
+Installasjon:
+apt-get install lame mp3splt libjack-dev jackd
+cd <katalogen med denne filen>
+make
+
+Bruk:
+cd <katalogen med denne filen>
+#start jack:
+jackd -R -d alsa &
+#start opptak
+./record
+
+SIGINT (ctrl+c) avslutter opptak
+SIGHUP (f.eks. "killall -HUP record") får record til å begynne å
+skrive til en ny fil.
+
+Scriptet get_recording.py kan brukes for å generere mp3splt
+kommandolinjer.
